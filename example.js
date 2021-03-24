@@ -44,12 +44,10 @@ function randomBar(){
          bar.draw('testbar')
     );
     randomBarI++;
-    if(randomBarI > 2000){
+    if(randomBarI > 100){
         stdio.cursorShow();
         process.exit(1);
     }
-    setTimeout(function(){
-       randomBar();
-    },10)
+    setTimeout(randomBar,100)
 }
 randomBar();
