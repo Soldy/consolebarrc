@@ -8,16 +8,16 @@ const styler = new (require('consolestylerc')).base();
 const barrcBase=function(){
     this.init = function(inp){
         return _init(inp);
-    }
+    };
     this.addLine = function(inp){
         return _addLine(inp);
-    }
+    };
     this.update = function(inp){
         return _upDate(inp);
-    }
+    };
     this.draw = function(bar){
         return _draw(bar);
-    }
+    };
     let _bars = {};
     const _init = function(inp){
         if(typeof inp.name === 'undefined')
@@ -46,7 +46,7 @@ const barrcBase=function(){
             (0 > inp.value)||
             (
                 (_bars[inp.bar].max !== 'auto')&&
-                (inp.value > bars[inp.bar].max)
+                (inp.value > _bars[inp.bar].max)
             )
         )
             inp.value = 0;
@@ -91,10 +91,10 @@ const barrcBase=function(){
                     lines[i].title
                 )+' \u2502'+
                  _line(
-                    lines[i].color,
-                    lines[i].value, 
-                    max
-                )+'\n'
+                     lines[i].color,
+                     lines[i].value, 
+                     max
+                 )+'\n'
             );
         }
         return (out);
@@ -114,8 +114,8 @@ const barrcBase=function(){
                     '█'
                 ),
                 [{
-                     'color'      : color,
-                     'background' : color
+                    'color'      : color,
+                    'background' : color
                 }]
             )+styler.style(
                 ('').padStart(
