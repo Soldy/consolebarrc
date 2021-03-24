@@ -113,7 +113,10 @@ const barrcBase=function(){
                     siz,
                     '█'
                 ),
-                [{color}]
+                [{
+                     'color'      : color,
+                     'background' : color
+                }]
             )+styler.style(
                 ('').padStart(
                     (35-siz),
