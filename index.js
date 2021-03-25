@@ -2,7 +2,7 @@
  *  @Soldy\consolestylerc\2021.02.04\GPL3
  */
 'use strict';
-const styler = new (require('consolestylerc')).base();
+const $stylerc = new (require('consolestylerc')).base();
 
 
 const barrcBase=function(){
@@ -108,7 +108,7 @@ const barrcBase=function(){
     const _line = function(color,size,max){
         const siz = Math.floor(size*(35/max));
         return (
-            styler.style(
+            stylerc.style(
                 ('').padStart(
                     siz,
                     '█'
@@ -117,7 +117,7 @@ const barrcBase=function(){
                     'color'      : color,
                     'background' : color
                 }]
-            )+styler.style(
+            )+stylerc.style(
                 ('').padStart(
                     (35-siz),
                     ' '
