@@ -108,7 +108,7 @@ const barrcBase=function(){
     const _line = function(color,size,max){
         const siz = Math.floor(size*(35/max));
         return (
-            stylerc.style(
+            $stylerc.style(
                 ('').padStart(
                     siz,
                     '█'
@@ -117,7 +117,7 @@ const barrcBase=function(){
                     'color'      : color,
                     'background' : color
                 }]
-            )+stylerc.style(
+            )+$stylerc.style(
                 ('').padStart(
                     (35-siz),
                     ' '
