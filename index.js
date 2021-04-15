@@ -16,6 +16,9 @@ const barrcBase=function(settings){
     this.draw = function(){
         return _draw();
     };
+    this.setup = function(settings){
+        return _setup.setup(settings);
+    }
     let _bars = [];
     /*
      *  @private
