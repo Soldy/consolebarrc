@@ -3,40 +3,40 @@
  */
 'use strict';
 const $stylerc = new (require('consolestylerc')).base();
+const $setuprc = (require('setuprc')).base;
 
 
-const barrcBase=function(){
-    this.init = function(inp){
-        return _init(inp);
-    };
-    this.addLine = function(inp){
-        return _addLine(inp);
+const barrcBase=function(settings){
+    this.add = function(inp){
+        return _add(inp);
     };
     this.update = function(inp){
         return _upDate(inp);
     };
-    this.draw = function(bar){
-        return _draw(bar);
+    this.draw = function(){
+        return _draw();
     };
-    let _bars = {};
-    const _init = function(inp){
-        if(typeof inp.name === 'undefined')
-            return false;
-        if(typeof inp.max === 'undefined')
-            inp.max = 10;
-        if(typeof inp.lines === 'undefined')
-            inp.lines = {};
-        _bars[inp.name]={
-            size  : 10,
-            max   : inp.max,
-            lines : inp.lines
-        };
-        return true;
-    };
-    const _addLine = function(inp){
+    let _bars = [];
+    /*
+     *  @private
+     *  @const {object}
+     */
+    const _setup = new $setuprc({
+        'max':{
+            'type'    : 'int',
+            'default' : 40
+        },
+        'autoSize':{
+            'type'    : 'bool',
+            'default' : true
+        },
+        'size':{
+            'type'    : 'int',
+            'default' : 10
+        },
+    });
+    const _add = function(inp){
         if(
-            (typeof inp.bar === 'undefined')||
-            (typeof _bars[inp.bar] === 'undefined')||
             (typeof inp.id  === 'undefined')||
             (typeof inp.title === 'undefined')
         )
@@ -45,16 +45,16 @@ const barrcBase=function(){
             (typeof inp.value === 'undefined')||
             (0 > inp.value)||
             (
-                (_bars[inp.bar].max !== 'auto')&&
-                (inp.value > _bars[inp.bar].max)
+                (_setup.get('autoSize'))&&
+                (inp.value > _setup.get('max'))
             )
         )
-            inp.value = 0;
+            inp.value = _setup.get('max');
         if(typeof inp.color === 'undefined')
             inp.color = 'white';
-        if(inp.title.toString().length+2 > _bars[inp.bar].size)
-            _bars[inp.bar].size = inp.title.length+2;
-        _bars[inp.bar].lines[inp.id] = {
+        if(inp.title.toString().length+2 > _setup.get('size'))
+            _setup.set('size', inp.title.length+2);
+        _bars[inp.id] = {
             title:inp.title,
             color:inp.color,
             value:inp.value
@@ -62,37 +62,26 @@ const barrcBase=function(){
         return true;
     };
     const _upDate = function(inp){
-        if(
-            (typeof _bars[inp.name] === 'undefined')||
-            (typeof _bars[inp.name].lines === 'undefined')
-        )
-            return false;
         for(let i in inp.update){
-            if(typeof _bars[inp.name].lines[i] === 'undefined')
+            if(typeof _bars[i] === 'undefined')
                 continue;
-            _bars[inp.name].lines[i].value = inp.update[i];
+            _bars[i].value = inp.update[i];
         }
         return true;
     };
-    const _draw = function(bar){
-        if(
-            (typeof bar === 'undefined')||
-            (typeof _bars[bar] === 'undefined')
-        )
-            return false;
-        let siz = _bars[bar].size,
+    const _draw = function(){
+        let siz = _setup.get('size'),
             out = '',
-            max = _bars[bar].max,
-            lines = _bars[bar].lines;
-        for (let i in lines){
+            max = _setup.get('max');
+        for (let i in _bars){
             out += (
                 _title(
                     siz,
-                    lines[i].title
+                    _bars[i].title
                 )+' \u2502'+
                  _line(
-                     lines[i].color,
-                     lines[i].value, 
+                     _bars[i].color,
+                     _bars[i].value, 
                      max
                  )+'\n'
             );
@@ -125,6 +114,8 @@ const barrcBase=function(){
             )
         );
     };
+    if ( typeof settings !== 'undefined' )
+        _setup.setup(settings);
 };
 
 
