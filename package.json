@@ -1,21 +1,22 @@
 {
   "name": "consolebarrc",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "nanoTest assert collection.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node example.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Soldy/consolebarrc"
   },
   "dependencies": {
-    "consolestdiorc": "^0.0.4",
-    "consolestylerc": "^0.0.4"
+    "consolestdiorc": "0.0.4-r2",
+    "consolestylerc": "0.0.4",
+    "setuprc": "^0.9.9-beta19"
   },
   "devDependencies": {
-    "nanoTest": "^0.9.9-beta15"
+    "nanoTest": "0.9.9-beta17c"
   },
   "keywords": [],
   "author": "Soldy <npmjs@gidigi.com> (http://gidigi.com)",
