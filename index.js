@@ -1,5 +1,5 @@
 /*
- *  @Soldy\consolestylerc\2021.02.04\GPL3
+ *  @Soldy\consolebarrc\2021.02.04\GPL3
  */
 'use strict';
 const $stylerc = new (require('consolestylerc')).base();
@@ -25,6 +25,10 @@ const barrcBase=function(settings){
      *  @const {object}
      */
     const _setup = new $setuprc({
+        'name':{
+            'type'    : 'string',
+            'default' : ''
+        },
         'max':{
             'type'    : 'int',
             'default' : 40
